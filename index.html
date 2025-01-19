@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Sections</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ccc;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #111;
+            margin-bottom: 40px;
+            font-size: xx-large;
+        }
+        .section {
+            background-color: #eee;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-content {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .button {
+            background-color: #3bd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #55e;
+        }
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .page-button {
+            background-color: gray;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .page-button:hover {
+            background-color: darkslategray;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Text Book Sections</h1>
+    <br><br><br>
+    <div id="sections-container">
+        <!-- Sections will be dynamically inserted here -->
+    </div>
+
+    <div class="pagination">
+        <button id="prev" class="page-button" onclick="changePage(-1)"><</button>
+        <span id="page-info"></span>
+        <button id="next" class="page-button" onclick="changePage(1)">></button>
+    </div>
+
+    <script>
+        const sections = [
+            { title: "Section 1", content: "Content for Section 1 goes here.", link: "https://youtube.com" },
+            { title: "Section 2", content: "Content for Section 2 goes here.", link: "https://example.com/section2" },
+            { title: "Section 3", content: "Content for Section 3 goes here.", link: "https://example.csom/section3" },
+            { title: "Section 4", content: "Content for Section 4 goes here.", link: "https://example.com/section4" },
+            { title: "Section 5", content: "Content for Section 5 goes here.", link: "https://example.com/section5" },
+            { title: "Section 6", content: "Content for Section 6 goes here.", link: "https://example.com/section6" },
+            { title: "Section 7", content: "Content for Section 7 goes here.", link: "https://example.com/section7" },
+            { title: "Section 8", content: "Content for Section 8 goes here.", link: "https://example.com/section8" },
+            { title: "Section 9", content: "Content for Section 9 goes here.", link: "https://example.com/section9" },
+            { title: "Section 10", content: "Content for Section 10 goes here.", link: "https://example.com/section10" },
+            // Add more sections as needed
+        ];
+
+        let currentPage = 1;
+        const sectionsPerPage = 5;
+
+        function displaySections() {
+            const start = (currentPage - 1) * sectionsPerPage;
+            const end = start + sectionsPerPage;
+            const sectionsToDisplay = sections.slice(start, end);
+
+            const container = document.getElementById('sections-container');
+            container.innerHTML = '';
+
+            sectionsToDisplay.forEach(section => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section';
+                sectionDiv.innerHTML = `
+                    <div class="section-content">
+                        <h2>${section.title}</h2>
+                        <p>${section.content}</p>
+                    </div>
+                    <a href="${section.link}" class="button" target="_blank">Read section</a>
+                `;
+                container.appendChild(sectionDiv);
+            });
+
+            document.getElementById('page-info').innerText = `Page ${currentPage} of ${Math.ceil(sections.length / sectionsPerPage)}`;
+            document.getElementById('prev').disabled = currentPage === 1;
+            document.getElementById('next').disabled = currentPage === Math.ceil(sections.length / sectionsPerPage);
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            displaySections();
+        }
+
+        // Initial display
+        displaySections();
+    </script>
+
+</body>
+</html>
